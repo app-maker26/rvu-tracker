@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RVU Tracker</title>
+    <!-- Manifest for PWA installation -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#228BE6" />
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <h1>RVU Tracker</h1>
+        <p>Enter the number of exams performed to calculate total RVUs and check against your daily threshold.</p>
+    </header>
+
+    <main>
+        <!-- Table to display exam types, RVU values and inputs -->
+        <table id="examTable">
+            <thead>
+                <tr>
+                    <th>Type of Exam</th>
+                    <th>RVUs per Exam</th>
+                    <th>Number of Exams</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be populated by script.js -->
+            </tbody>
+        </table>
+
+        <!-- Threshold and results -->
+        <section id="results">
+            <div class="result-item">
+                <label for="thresholdInput">Minimum RVU Threshold:</label>
+                <!-- Updated default threshold to 61 RVUs based on user feedback -->
+                <input type="number" id="thresholdInput" value="61" min="0" step="0.01" />
+            </div>
+            <div class="result-item">
+                <span>Total RVUs for the day:</span>
+                <strong id="totalRvus">0</strong>
+            </div>
+            <div class="result-item">
+                <span>Percentage of threshold met:</span>
+                <strong id="percentage">0%</strong>
+            </div>
+            <div class="result-item" id="summary">
+                <span>Summary:</span>
+                <div id="status" style="font-weight:bold;"></div>
+            </div>
+            <div class="result-item" id="suggestions" style="display:none;">
+                <span>Additional needed:</span>
+                <ul id="suggestionList" style="margin:0; padding-left:1.2rem;"></ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Progressive Web App for tracking daily RVUs. Add to home screen for quick access.</p>
+    </footer>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+    <script>
+        // Register service worker to enable offline capabilities and PWA installation
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('service-worker.js').catch(function (err) {
+                    console.error('Service Worker registration failed:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
